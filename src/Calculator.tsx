@@ -173,9 +173,6 @@ const Calculator: FC<Props> = props => {
         </div>
         <div className="col-md-12">
           <table className="table">
-            <caption style={{ color: 'red', fontWeight: 'bold' }}>
-              * Está sendo considerado 7 dias por semana
-            </caption>
             <thead>
               <tr>
                 <th>Modalidade</th>
