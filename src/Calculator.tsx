@@ -63,7 +63,7 @@ const Calculator: FC<Props> = props => {
     if (sizePerYear <= 1000) return 'Pequena (Lite)'
     // if (sizePerYear <= 3000) return 'Média'
     return 'Unidade padrão'
-  }, [time, totalTb, bandwith])
+  }, [sizePerYear])
 
   const rows = useMemo(() => {
     return data?.map((row, index: number) => {
@@ -152,7 +152,7 @@ const Calculator: FC<Props> = props => {
         </tr>
       )
     })
-  }, [data, deletedRows, totalTb])
+  }, [data, deletedRows, time])
 
   return (
     <div className="container">
