@@ -158,9 +158,9 @@ const Calculator: FC<Props> = props => {
     <div className="container">
       <div className="row justify-content-end">
         <div className="col-md-12" style={{ marginTop: 20, marginBottom: 20 }}>
-          <h3 style={{ fontWeight: 'bold', textAlign: 'center' }}>
+          <h1 style={{ fontWeight: 'bold', textAlign: 'center' }}>
             PACS Storage Calculator
-          </h3>
+          </h1>
         </div>
         <div className="col-md-12">
           <table className="table">
