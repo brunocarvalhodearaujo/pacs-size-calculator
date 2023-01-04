@@ -8,7 +8,7 @@
 
 import { type FC, useState, useMemo } from 'react'
 
-const modalities = [
+const modalities: string[] = [
   'CR',
   'CT',
   'DX',
