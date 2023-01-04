@@ -45,11 +45,11 @@ export type Props = {}
  */
 const Calculator: FC<Props> = props => {
   const [deletedRows, setDeletedRows] = useState<boolean>(false)
-  const [time, setTime] = useState(20)
+  const [time, setTime] = useState<number>(20)
   const [data, setData] = useState<CalculatorRow[]>([
     { modality: 'CR', devices: 1, studiesPerDay: 82, usedDisk: 15 },
     { modality: 'CT', devices: 1, studiesPerDay: 52, usedDisk: 600 },
-    { modality: 'MR', devices: 1, studiesPerDay: 14, usedDisk: 250 },
+    { modality: 'MR', devices: 1, studiesPerDay: 14, usedDisk: 250 }
   ])
 
   const totalTb: number = data.reduce((acc, row): number =>
@@ -57,13 +57,16 @@ const Calculator: FC<Props> = props => {
     0
   )
   const bandwith: number = totalTb / time
-  const sizePerYear: number = (totalTb / time) * 240
+  const sizePerYear: number = (totalTb / time) * 31
 
   const recommendedModel = useMemo(() => {
     if (sizePerYear <= 1000) return 'Pequena (Lite)'
-    // if (sizePerYear <= 3000) return 'Média'
-    return 'Unidade padrão'
+    return 'Unidade Grande (Padrão)'
   }, [sizePerYear])
+
+  const addRow = () => {
+    setData([...data, { modality: '', devices: 1, studiesPerDay: 0, usedDisk: 0 }])
+  }
 
   const rows = useMemo(() => {
     return data?.map((row, index: number) => {
@@ -120,25 +123,31 @@ const Calculator: FC<Props> = props => {
             />
           </td>
           <td>
-            <input
-              className='form-control'
-              type="number"
-              value={row.usedDisk}
-              onChange={e => {
-                const value = e.target.value
-                const newData = [...data]
-                newData[index].usedDisk = parseInt(value, 10)
-                setData(newData)
-              }}
-            />
+            <div className="input-group">
+              <input
+                className='form-control'
+                type="number"
+                value={row.usedDisk}
+                onChange={e => {
+                  const value = e.target.value
+                  const newData = [...data]
+                  newData[index].usedDisk = parseInt(value, 10)
+                  setData(newData)
+                }}
+              />
+              <span className="input-group-text">MB</span>
+            </div>
           </td>
           <td>
-            <input
-              className='form-control'
-              type="text"
-              disabled
-              value={row.studiesPerDay * row.devices * row.usedDisk * time / 1000}
-            />
+            <div className="input-group">
+              <input
+                className='form-control'
+                type="text"
+                disabled
+                value={row.studiesPerDay * row.devices * row.usedDisk * time / 1000}
+              />
+              <span className="input-group-text">GB</span>
+            </div>
           </td>
           <td>
             <button
@@ -164,26 +173,31 @@ const Calculator: FC<Props> = props => {
         </div>
         <div className="col-md-12">
           <table className="table">
-            <caption style={{ color: 'red', fontWeight: 'bold' }}>* Está sendo considerado 5 dias por semana</caption>
+            <caption style={{ color: 'red', fontWeight: 'bold' }}>
+              * Está sendo considerado 7 dias por semana
+            </caption>
             <thead>
               <tr>
                 <th>Modalidade</th>
                 <th>Qtd. aparelhos</th>
                 <th>Número de estudos por dia</th>
-                <th>Tamanho do estudo (MB)</th>
+                <th>Tamanho do estudo</th>
                 <th>
-                  <select
-                    className='form-select form-select-sm'
-                    value={time}
-                    onChange={e => setTime(parseInt(e.target.value, 10))}
-                  >
-                    <option value="1">1 dia (GB)</option>
-                    <option value="20">1 mês (GB) *</option>
-                    <option value="120">6 meses (GB) *</option>
-                    <option selected value="240">1 ano (GB) *</option>
-                    <option value="720">3 anos (GB) *</option>
-                    <option value="1200">5 anos (GB) *</option>
-                  </select>
+                  <div className="input-group">
+                    <span className="input-group-text">Período</span>
+                    <select
+                      className='form-select form-select-sm'
+                      value={time}
+                      onChange={e => setTime(parseInt(e.target.value, 10))}
+                    >
+                      <option value="1">1 dia</option>
+                      <option value="31">1 mês (31 dias)</option>
+                      <option value="180">6 meses (180 dias)</option>
+                      <option selected value="365">1 ano (365 dias)</option>
+                      <option value="1095">3 anos (1095 dias)</option>
+                      <option value="1825">5 anos (1825 dias)</option>
+                    </select>
+                  </div>
                 </th>
                 <th></th>
               </tr>
@@ -210,12 +224,7 @@ const Calculator: FC<Props> = props => {
           </table>
         </div>
         <div className="col-md-12">
-          <button
-            className='btn btn-primary'
-            onClick={() => setData([...data, { modality: '', devices: 1, studiesPerDay: 0, usedDisk: 0 }])}
-          >
-            Adicionar
-          </button>
+          <button className='btn btn-primary' onClick={addRow}>Adicionar</button>
         </div>
       </div>
       <div className="row" style={{ marginTop: 50 }}>
