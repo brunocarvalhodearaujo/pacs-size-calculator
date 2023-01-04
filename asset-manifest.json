@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/pacs-size-calculator/static/js/main.4319e3fc.js",
+    "static/js/787.ce850ec5.chunk.js": "/pacs-size-calculator/static/js/787.ce850ec5.chunk.js",
+    "index.html": "/pacs-size-calculator/index.html",
+    "main.4319e3fc.js.map": "/pacs-size-calculator/static/js/main.4319e3fc.js.map",
+    "787.ce850ec5.chunk.js.map": "/pacs-size-calculator/static/js/787.ce850ec5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.4319e3fc.js"
+  ]
+}
